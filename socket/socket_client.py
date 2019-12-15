@@ -6,6 +6,7 @@ HOST = '127.0.0.1'  # 服务器的主机名或者 IP 地址
 PORT = 65432        # 服务器使用的端口
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s_client:
     s_client.connect((HOST, PORT))
+    # 发送数据需要是byte，而不能是str
     s_client.sendall(b'Hello, world')
     # 1024 是缓冲区数据大小限制最大值参数 bufsize，并不是说 recv() 方法只返回 1024 个字节的内容
     # send() 方法也是这个原理，它返回发送内容的字节数，结果可能小于传入的发送内容，你得处理这处情况，

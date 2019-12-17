@@ -34,4 +34,4 @@ def accept_wrapper(sock):
 
 def service_connection(key, mask):
     sock = key.fileobj
-    data = kkey.data
+    data = key.data

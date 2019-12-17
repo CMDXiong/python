@@ -1,4 +1,6 @@
 # encoding: utf-8
+# socket服务端编写示例
+
 import socket
 import threading
 
@@ -6,17 +8,9 @@ import threading
 def recv(sock):
     """接受所有的数据, 数据是字节流"""
     # 1024指最大的接受数据量，但不一定每次都接受1024的数量量
+    # 如果需要做更复杂的操作，需要做服务端和客户端规定相应的协议，(如，发送数据的长度，分片，传输完成标志等等细节上的处理)
     data = sock.recv(1024).decode("utf8")
     return data
-
-    # data = b""
-    # while True:
-    #     d = sock.recv(1024)    # 这是一个阻塞函数，当没有数据接收时，recv方法会阻塞
-    #     if d:
-    #         data += d
-    #     else:
-    #         break
-    # return data.decode("utf8")
 
 
 def send(sock, data):
@@ -55,7 +49,8 @@ def main():
     # 关联 socket 到指定的网络接口（IP 地址）和端口号，
     # 第一个参数主机名称、IP 地址、空字符串，只有主机上的进程可以连接到服务器
     # 空：服务器将接受本机所有可用的IPv4地址
-    server.bind(('0.0.0.0', 8000))
+    # server.bind(('0.0.0.0', 8000))
+    server.bind(('127.0.0.1', 8000))
 
     # backlog参数：允许连接的请求数量
     server.listen(5)

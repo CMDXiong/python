@@ -1,4 +1,5 @@
 # encoding: utf-8
+# socket模拟http请求
 
 # requests -> urllib -> socket
 import socket
@@ -22,6 +23,7 @@ def get_url(url):
     # 当数据大于1024时,将所有数据读取完
     data = b""
     while True:
+        # 这里的recv没有阻塞，是因为对方服务器执行关闭操作导致client.recv才会返回空，进而因break
         d = client.recv(1024)
         if d:
             data += d

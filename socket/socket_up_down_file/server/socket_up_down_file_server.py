@@ -53,6 +53,7 @@ class MYTCPServer:
             # 用线程来处理每一个连接
             client_thread = threading.Thread(target=socket_handle.handle_sock, args=())
             client_thread.start()
+        self.close()
 
 
 class MySocketHandle(object):
@@ -87,6 +88,8 @@ class MySocketHandle(object):
         while True:
             try:
                 head_dict = self.recv_header()
+                # 客户端断开后：
+                if not head_dict: break
                 print("接收的命令报头：", head_dict)
                 cmd = head_dict['cmd']
                 if hasattr(self, cmd):
@@ -94,6 +97,7 @@ class MySocketHandle(object):
                     func(head_dict)
             except Exception:
                 break
+        self.close()
 
     def put(self, head_dict):
         """上传文件的操作"""
@@ -138,6 +142,7 @@ class MySocketHandle(object):
 
     def close(self):
         self.socket.close()
+        print('Connection from %s:%s closed.' % self.client_addr)
 
 
 def main():

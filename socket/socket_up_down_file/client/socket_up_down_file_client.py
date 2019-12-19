@@ -62,15 +62,19 @@ class MYTCPClient:
 
     def run(self):
         while True:
-            inp = input(">>: ").strip()  # 命令的形式"get a.txt.txt" 或者"put a.txt.txt"
-            if not inp:
-                continue
-            inp_list = inp.split()
-            cmd = inp_list[0]
-            print(cmd)
-            if hasattr(self, cmd):
-                func = getattr(self, cmd)
-                func(inp_list)
+            try:
+                inp = input(">>: ").strip()  # 命令的形式"get a.txt.txt" 或者"put a.txt.txt"
+                if not inp:
+                    continue
+                inp_list = inp.split()
+                cmd = inp_list[0]
+                if hasattr(self, cmd):
+                    func = getattr(self, cmd)
+                    func(inp_list)
+            except Exception:
+                # 服务端断开
+                break
+        self.socket.close()
 
     def put(self, args):
         """上传文件数据的操作"""

@@ -10,6 +10,7 @@ def main():
         try:
             # 1.发命令
             cmd = input(">>: ").strip()
+            if not cmd: continue  # 客户端不能发送空，否则服务端会阻塞在recv方法
             client.send(cmd.encode("utf8"))
 
             # 2.拿命令的结果，并打印

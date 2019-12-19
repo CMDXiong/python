@@ -18,7 +18,7 @@ def main():
             try:
                 # 1.收命令
                 cmd = conn.recv(1024)
-                # 客户端断开后，cmd会接受到空
+                # 客户端断开后，cmd会接受到空， 此时break就好
                 if not cmd: break
                 print("客户端数据", cmd)
 
